@@ -28,7 +28,7 @@ export default function PatientAssessmentDashboard() {
           <CardContent>
             <div className="grid grid-cols-5 pb-8">
               <div className="col-span-1">
-                <Image
+                <img
                   src={patientDetails.imageUrl}
                   alt={`${patientDetails.name}'s photo`}
                   className="w-24 h-24 rounded-full object-cover"
