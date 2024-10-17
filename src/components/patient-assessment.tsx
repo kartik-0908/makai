@@ -9,6 +9,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { generateSum } from "../actions/ai"
 import { readStreamableValue } from "ai/rsc"
 
+interface Stage {
+  id: number;
+  name: string;
+  status: string;
+  date: string;
+  recurring?: string;
+}
+
+interface TestDetail {
+  name: string;
+  result: string;
+}
+
+interface TestDetails {
+  [key: string]: TestDetail[];
+}
+
 const stages = [
   { id: 1, name: "Initial Assessment", status: "completed", date: "2023-06-01" },
   { id: 2, name: "General Assessment", status: "completed", date: "2023-06-15", recurring: "Every 15 days" },
@@ -17,7 +34,7 @@ const stages = [
   { id: 5, name: "Follow-up 3", status: "completed", date: "2023-06-21", recurring: "Every 2 days" },
 ]
 
-const testDetails = {
+const testDetails: TestDetails = {
   "Initial Assessment": [
     { name: "CKD Stage", result: "3" },
     { name: "Medications", result: "Lisinopril; Furosemide; Atorvastatin" }
@@ -122,11 +139,13 @@ const dummyNextAction = `
 7. Schedule a consultation with a nutritionist to further optimize dietary habits.
 `
 
+type View = 'main' | 'summary' | 'nextAction';
+
 export function PatientAssessment() {
-  const [selectedStage, setSelectedStage] = useState(null)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [view, setView] = useState('main') // 'main', 'summary', or 'nextAction'
-  const [summary, setSummary] = useState('')
+  const [selectedStage, setSelectedStage] = useState<Stage | null>(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+  const [view, setView] = useState<View>('main')
+  const [summary, setSummary] = useState<string>('')
 
   const handleGenerateSummary = async () => {
     setSummary('')
@@ -138,7 +157,7 @@ export function PatientAssessment() {
     }
   };
 
-  const handleStageClick = (stage: any) => {
+  const handleStageClick = (stage: Stage) => {
     setSelectedStage(stage)
     setIsDrawerOpen(true)
   }
@@ -151,7 +170,7 @@ export function PatientAssessment() {
     setView('main')
   }
 
-  const processSummary = (text) => {
+  const processSummary = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*)/);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
@@ -169,16 +188,17 @@ export function PatientAssessment() {
             <div key={stage.id} className="flex items-start mb-4 last:mb-0">
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer ${stage.status === "completed"
-                    ? "bg-green-500"
-                    : stage.status === "current"
-                      ? "bg-blue-500"
-                      : "bg-gray-300"
-                    }`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer ${
+                    stage.status === "completed"
+                      ? "bg-green-500"
+                      : stage.status === "current"
+                        ? "bg-blue-500"
+                        : "bg-gray-300"
+                  }`}
                   onClick={() => handleStageClick(stage)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       handleStageClick(stage)
                     }
@@ -198,12 +218,13 @@ export function PatientAssessment() {
               </div>
               <div className="ml-4">
                 <span
-                  className={`text-sm font-medium ${stage.status === "completed"
-                    ? "text-green-500"
-                    : stage.status === "current"
-                      ? "text-blue-500"
-                      : "text-gray-500"
-                    }`}
+                  className={`text-sm font-medium ${
+                    stage.status === "completed"
+                      ? "text-green-500"
+                      : stage.status === "current"
+                        ? "text-blue-500"
+                        : "text-gray-500"
+                  }`}
                 >
                   {stage.name}
                 </span>
@@ -267,13 +288,10 @@ export function PatientAssessment() {
       <Sheet open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <SheetContent side="left" className="w-[400px] sm:w-[540px]">
           <SheetHeader>
-            <SheetTitle>{
-              //@ts-expect-error
-              selectedStage?.name}</SheetTitle>
+            <SheetTitle>{selectedStage?.name}</SheetTitle>
           </SheetHeader>
           <ScrollArea className="h-[calc(100vh-80px)] w-full rounded-md border p-4 mt-4">
-            {selectedStage &&
-              //@ts-expect-error
+            {selectedStage && testDetails[selectedStage.name] && 
               testDetails[selectedStage.name].map((test, index) => (
                 <div key={index} className="mb-4 last:mb-0">
                   <h3 className="font-semibold">{test.name}</h3>
