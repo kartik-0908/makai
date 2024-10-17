@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { PatientAssessment } from '../components/patient-assessment';
+import Image from 'next/image';
 
 const patientDetails = {
   name: "John Doe",
@@ -27,7 +28,7 @@ export default function PatientAssessmentDashboard() {
           <CardContent>
             <div className="grid grid-cols-5 pb-8">
               <div className="col-span-1">
-                <img
+                <Image
                   src={patientDetails.imageUrl}
                   alt={`${patientDetails.name}'s photo`}
                   className="w-24 h-24 rounded-full object-cover"
