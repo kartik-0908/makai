@@ -112,15 +112,6 @@ const testDetails = {
   ],
 };
 
-const dummySummary = `
-Patient John Doe has shown significant improvement over the course of treatment.
-Initial concerns have been addressed, and the patient has demonstrated good adherence to the prescribed medication regimen.
-Lab results indicate positive progress, with key health markers trending towards normal ranges.
-The patient reports improved energy levels and a reduction in primary symptoms.
-Lifestyle changes, including diet and exercise modifications, have been implemented successfully.
-No significant side effects from the current treatment plan have been reported.
-`
-
 const dummyNextAction = `
 1. Schedule a comprehensive follow-up assessment in 30 days.
 2. Continue current medication regimen with no changes.
