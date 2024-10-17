@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { PatientAssessment } from '../components/patient-assessment';
-import Image from 'next/image';
 
 const patientDetails = {
   name: "John Doe",
