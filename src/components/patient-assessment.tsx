@@ -268,12 +268,12 @@ export function PatientAssessment() {
         <SheetContent side="left" className="w-[400px] sm:w-[540px]">
           <SheetHeader>
             <SheetTitle>{
-              //@ts-ignore
+              //@ts-expect-error
               selectedStage?.name}</SheetTitle>
           </SheetHeader>
           <ScrollArea className="h-[calc(100vh-80px)] w-full rounded-md border p-4 mt-4">
             {selectedStage &&
-              //@ts-ignore
+              //@ts-expect-error
               testDetails[selectedStage.name].map((test, index) => (
                 <div key={index} className="mb-4 last:mb-0">
                   <h3 className="font-semibold">{test.name}</h3>
