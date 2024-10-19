@@ -90,7 +90,7 @@ control of edema.
 intermittently, and chest pain was noted on 10/05/2024,
 which warrants further evaluation, as it could indicate a
 cardiovascular issue, particularly in a CKD patient.
-### Key Interpretations:
+ Key Interpretations:
 - The patient initially experienced worsening fluid
 overload, which was well-controlled with increased Lasix.
 - However, the introduction of higher doses of diuretics led
