@@ -2,10 +2,13 @@
 'use server'
 
 import { PrismaClient } from '@prisma/client'
+import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient()
 
 export async function getPatients() {
+    revalidatePath('/')
+
     return await prisma.patient.findMany({
         orderBy: { createdAt: 'desc' }
     });

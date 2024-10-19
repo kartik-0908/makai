@@ -3,7 +3,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react"
-import { Check, FileText, ArrowRight, ArrowLeft } from "lucide-react"
+import { Check, FileText, ArrowRight, ArrowLeft, Loader2 } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../components/ui/sheet"
 import { ScrollArea } from "./ui/scroll-area"
 import { Button } from "./ui/button"
@@ -35,6 +35,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
   const [view, setView] = useState<View>('main')
   const [summary, setSummary] = useState<string>('')
   const [action, setAction] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchAssessments = async () => {
@@ -55,20 +56,32 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
   const handleGenerateSummary = async () => {
     setSummary('')
     setView('summary')
-    const { output } = await generateSum(patientId)
-    for await (const delta of readStreamableValue(output)) {
-      setSummary(curr => `${curr}${delta}`)
+    setIsLoading(true)
+    try {
+      const { output } = await generateSum(patientId)
+      for await (const delta of readStreamableValue(output)) {
+        setSummary(curr => `${curr}${delta}`)
+        setIsLoading(false)
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const handleGenerateAction = async () => {
     setAction('')
     setView('nextAction')
-    const { output } = await generateactions(patientId)
-    for await (const delta of readStreamableValue(output)) {
-      setAction(curr => `${curr}${delta}`)
+    setIsLoading(true)
+    try {
+      const { output } = await generateactions(patientId)
+      for await (const delta of readStreamableValue(output)) {
+        setAction(curr => `${curr}${delta}`)
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
+
 
   const handleAssessmentClick = (assessment: AssessmentWithParsedItems) => {
     setSelectedAssessment(assessment)
@@ -145,7 +158,13 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
               <CardTitle>Patient Summary</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-line">{processSummary(summary)}</p>
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-8 w-8 animate-spin" />
+                </div>
+              ) : (
+                <p className="whitespace-pre-line">{processSummary(summary)}</p>
+              )}
               <Button className="mt-4" onClick={handleBack}>
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
