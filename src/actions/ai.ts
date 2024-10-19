@@ -48,6 +48,9 @@ Please analyze this patient's assessment history and provide:
 3. Key areas of concern
 
 
+Dont include any personal information about user in your reply
+
+
     `;
 
   console.log(prompt);
@@ -71,7 +74,7 @@ export async function generateactions(id: string) {
   const stream = createStreamableValue('');
   const data = await formatAssessmentData(id);
   const prompt = `
-    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. Only respond within 100 words
+    You are a nephrologist Youwill be given  periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. Only respond within 100 words
     
 Patient Assessment History:
 ${data}
