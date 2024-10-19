@@ -10,37 +10,29 @@ interface JsonItem {
   name: string;
   result: string;
 }
+type AssessmentJsonItems = Record<string, string>;
 
 async function formatAssessmentData(patientId: string) {
   const data = await getAssessments(patientId);
   const parsedAssessments = data.map(assessment => ({
     ...assessment,
-    items: Array.isArray(assessment.items)
-      // @ts-expect-error: items is JsonValue from Prisma but we know it's an array of JsonItem
-      ? (assessment.items as JsonItem[]).map(item => ({
-        name: item.name,
-        result: item.result
-      }))
-      : []
+    // @ts-expect-error: items is JsonValue from Prisma but we know it's an array of JsonItem
+    items: Array.isArray(assessment.items) ? assessment.items.map((item: AssessmentJsonItems) => ({
+      name: item.name,
+      result: item.result
+    })) : []
   })) as AssessmentWithParsedItems[];
 
   return parsedAssessments
     .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-    .map(assessment => {
-      const itemsString = assessment.items
-        .map(item => `${item.name}: ${item.result}`)
-        .join('\n- ');
-
-      return `
+    .map(assessment => `
 Assessment: ${assessment.type}
 Date: ${new Date(assessment.createdAt).toLocaleDateString()}
 Status: ${assessment.status}
 ${assessment.daysUntilDue ? `Next Due: ${assessment.daysUntilDue} days` : ''}
 Measurements:
-- ${itemsString}
----`;
-    })
-    .join('\n');
+- ${assessment.items.map(item => `${item.name}: ${item.result}`).join('\n- ')}
+---`).join('\n');
 }
 export async function generateSum(id: string) {
 
@@ -89,9 +81,7 @@ ${data}
 
 
 Please analyze this patient's assessment history and provide:
-1. Overall condition progression
-2. Significant changes in measurements
-3. Next course of action
+1. Next course of action
 
 
     `;
