@@ -36,7 +36,7 @@ export async function generateSum(id: string) {
   const stream = createStreamableValue('');
   const data = await formatAssessmentData(id);
   const prompt = `
-    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a summary report about patient Only respond with summary report. Limit your summary to 100 words Summary of all the data points collected with treatment recommendations and next steps.
+    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a summary report about patient Only respond with summary report. Limit your summary to 200 words Summary of all the data points collected with treatment recommendations and next steps.
     
 Patient Assessment History:
 ${data}
@@ -74,7 +74,7 @@ export async function generateactions(id: string) {
   const stream = createStreamableValue('');
   const data = await formatAssessmentData(id);
   const prompt = `
-    You are a nephrologist Youwill be given  periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. Only respond within 100 words
+    You are a nephrologist Youwill be given  periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. Only respond within 200 words
     
 Patient Assessment History:
 ${data}
