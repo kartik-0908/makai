@@ -16,12 +16,11 @@ async function formatAssessmentData(patientId: string) {
   const parsedAssessments = data.map(assessment => ({
     ...assessment,
     items: Array.isArray(assessment.items)
-    //@ts-ignore
-    
+      // @ts-expect-error: items is JsonValue from Prisma but we know it's an array of JsonItem
       ? (assessment.items as JsonItem[]).map(item => ({
-          name: item.name,
-          result: item.result
-        }))
+        name: item.name,
+        result: item.result
+      }))
       : []
   })) as AssessmentWithParsedItems[];
 
