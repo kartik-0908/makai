@@ -6,15 +6,22 @@ import { AssessmentWithParsedItems } from '@/components/patient-assessment';
 import { azure } from '@ai-sdk/azure';
 // require('dotenv').config();
 
+interface JsonItem {
+  name: string;
+  result: string;
+}
+
 async function formatAssessmentData(patientId: string) {
   const data = await getAssessments(patientId);
   const parsedAssessments = data.map(assessment => ({
     ...assessment,
     items: Array.isArray(assessment.items)
-      ? assessment.items.map((item: any) => ({
-        name: item.name,
-        result: item.result
-      }))
+    //@ts-ignore
+    
+      ? (assessment.items as JsonItem[]).map(item => ({
+          name: item.name,
+          result: item.result
+        }))
       : []
   })) as AssessmentWithParsedItems[];
 
@@ -36,7 +43,6 @@ Measurements:
     })
     .join('\n');
 }
-
 export async function generateSum(id: string) {
 
   const stream = createStreamableValue('');
