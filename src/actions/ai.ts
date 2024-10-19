@@ -6,10 +6,6 @@ import { AssessmentWithParsedItems } from '@/components/patient-assessment';
 import { azure } from '@ai-sdk/azure';
 // require('dotenv').config();
 
-interface JsonItem {
-  name: string;
-  result: string;
-}
 type AssessmentJsonItems = Record<string, string>;
 
 async function formatAssessmentData(patientId: string) {
@@ -74,7 +70,7 @@ export async function generateactions(id: string) {
   const stream = createStreamableValue('');
   const data = await formatAssessmentData(id);
   const prompt = `
-    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a summary report about patient Only respond with summary report. Limit your summary to 100 words Summary of all the data points collected with treatment recommendations and next steps.
+    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. .
     
 Patient Assessment History:
 ${data}
