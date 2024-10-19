@@ -105,10 +105,46 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
       <div className="w-1/4 p-4 border-r">
         <div className="flex flex-col item-start">
           {assessments.map((assessment, index) => (
+            // <div key={assessment.id} className="flex items-start mb-4 last:mb-0">
+            //   <div className="flex flex-col items-center">
+            //     <div
+            //       className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center cursor-pointer"
+            //       onClick={() => handleAssessmentClick(assessment)}
+            //       role="button"
+            //       tabIndex={0}
+            //       onKeyDown={(e) => {
+            //         if (e.key === 'Enter' || e.key === ' ') {
+            //           handleAssessmentClick(assessment)
+            //         }
+            //       }}
+            //     >
+            //       <Check className="text-white" />
+            //     </div>
+            //     {index !== assessments.length - 1 && (
+            //       <div className="w-[2px] h-8 bg-gray-300 my-1" />
+            //     )}
+            //   </div>
+            //   <div className="ml-4">
+            //     <span className="text-sm font-medium text-green-500">
+            //       {assessment.type}
+            //     </span>
+            //     <p className="text-xs text-gray-500">
+            //       {new Date(assessment.createdAt).toLocaleDateString()}
+            //     </p>
+            //     {assessment.daysUntilDue && (
+            //       <p className="text-xs text-gray-400">Every {assessment.daysUntilDue} days</p>
+            //     )}
+            //   </div>
+            // </div>
             <div key={assessment.id} className="flex items-start mb-4 last:mb-0">
               <div className="flex flex-col items-center">
                 <div
-                  className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center cursor-pointer"
+                  className={`w-10 h-10 rounded-full ${assessment.status === 'completed'
+                      ? 'bg-green-500'
+                      : assessment.status === 'due'
+                        ? 'bg-yellow-500'
+                        : 'bg-gray-400'
+                    } flex items-center justify-center cursor-pointer`}
                   onClick={() => handleAssessmentClick(assessment)}
                   role="button"
                   tabIndex={0}
@@ -118,14 +154,25 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
                     }
                   }}
                 >
-                  <Check className="text-white" />
+                  {assessment.status === 'completed' ? (
+                    <Check className="text-white" />
+                  ) : assessment.status === 'due' ? (
+                    <ArrowRight className="text-white" />
+                  ) : (
+                    <FileText className="text-white" />
+                  )}
                 </div>
                 {index !== assessments.length - 1 && (
                   <div className="w-[2px] h-8 bg-gray-300 my-1" />
                 )}
               </div>
               <div className="ml-4">
-                <span className="text-sm font-medium text-green-500">
+                <span className={`text-sm font-medium ${assessment.status === 'completed'
+                    ? 'text-green-500'
+                    : assessment.status === 'due'
+                      ? 'text-yellow-500'
+                      : 'text-gray-500'
+                  }`}>
                   {assessment.type}
                 </span>
                 <p className="text-xs text-gray-500">
