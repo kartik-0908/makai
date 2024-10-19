@@ -71,7 +71,7 @@ export async function generateactions(id: string) {
   const stream = createStreamableValue('');
   const data = await formatAssessmentData(id);
   const prompt = `
-    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. .
+    Act as a nephrologist while looking at periodic assessments from CKD patients.Based on the given above data prepare a plan for the next steps should be taken by nurse. Only respond within 100 words
     
 Patient Assessment History:
 ${data}
