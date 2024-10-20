@@ -76,10 +76,6 @@ export function ClientPatientDashboard({ initialPatients }: { initialPatients: P
                     <p className="text-sm font-medium text-gray-500">Gender</p>
                     <p className="mt-1 text-lg font-semibold">{selectedPatient.gender}</p>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-500">Email</p>
-                    <p className="mt-1 text-lg font-semibold">{selectedPatient.email}</p>
-                  </div>
                 </div>
                 <PatientAssessment patientId={selectedPatient.id} />
               </CardContent>
