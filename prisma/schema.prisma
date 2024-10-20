@@ -24,12 +24,11 @@ model Patient {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime
   name       String
-  email      String       @unique
   phone      String?
   age        Int
   address    String?
   imageUrl   String?
-  gender     Gender       @default(UNSPECIFIED)
+  gender     Gender       @default(MALE)
   status     Status       @default(ACTIVE)
   Assessment Assessment[]
 }
