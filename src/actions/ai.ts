@@ -109,6 +109,9 @@ arrhythmia or ischemic heart disease), which needs further
 investigation.
 
 
+Strictly only mention the above data which is available and do not mention any other information.
+
+
     `;
 
   console.log(prompt);
@@ -140,6 +143,8 @@ ${data}
 
 Please analyze this patient's assessment history and provide:
 1. Next course of action
+
+Strictly only mention the above data which is available and do not mention any other information which is undefined or null.
 
 
     `;
