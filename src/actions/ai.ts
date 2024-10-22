@@ -127,7 +127,6 @@ ${data}
 
 Some of the example of summary report:
 
-[12:58 am, 23/10/2024] Manav: Accelerated Course of Treatment for a Hypertensive Patient
 Patient Profile:
 
 Diagnosed with Stage 2 Hypertension (BP consistently above 160/100 mmHg)
