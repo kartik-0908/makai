@@ -120,6 +120,8 @@ Strictly only mention the above data which is available and do not mention any o
 
 act as a physician and summarize all the health data for hypertensive patients and also do any course corrections to the treatment plan if required.
 
+While answering dont use any symbols like #####
+
 Patient Assessment History:
 ${data}
 
