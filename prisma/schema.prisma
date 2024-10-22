@@ -30,6 +30,7 @@ model Patient {
   imageUrl   String?
   gender     Gender       @default(MALE)
   status     Status       @default(ACTIVE)
+  disease    String       @default("CKD")
   Assessment Assessment[]
 }
 
