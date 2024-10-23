@@ -277,17 +277,15 @@ Strictly only mention the above data which is available and do not mention any o
 
     `;
 
-  console.log(prompt);
+  // console.log(prompt);
   (async () => {
-
-
-
     const { textStream } = await streamText({
       model: azure('gpt-4o'),
       prompt: prompt,
     });
 
     for await (const delta of textStream) {
+      console.log(delta)
       stream.update(delta);
     }
 

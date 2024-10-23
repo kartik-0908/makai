@@ -19,6 +19,6 @@ export async function getAssessments(patientId: string) {
         where: { patientId },
         orderBy: { createdAt: 'desc' }
     })
-    console.log(res)
+    // console.log(res)
     return res;
 }
