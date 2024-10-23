@@ -127,62 +127,9 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
     };
   };
 
-  const processSummary = (text: string): React.ReactNode => {
-    // Split the text into parts that might contain tables or regular text
-    const parts = text.split('|');
-
-    if (parts.length <= 1) {
-      // No tables found, process text normally
-      return text.split('\n').map((line: string, index: number) => {
-        if (line.startsWith('###')) {
-          return (
-            <h3 key={index} className="font-bold text-lg mt-4 mb-2">
-              {line.replace('###', '').trim()}
-            </h3>
-          );
-        }
-        return <div key={index}>{line}</div>;
-      });
-    }
-
-    // If we have a table, process it
-    const { headers, dataRows } = processTableData(text);
-
-    return (
-      <div className="space-y-4">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                {headers.map((header: string, index: number) => (
-                  <th key={index} className="border p-2 bg-gray-100 font-semibold text-left">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {dataRows.map((row: string[], rowIndex: number) => (
-                <tr key={rowIndex}>
-                  {row.map((cell: string, cellIndex: number) => (
-                    <td key={cellIndex} className="border p-2">
-                      {cell}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  };
-
-
-
   return (
     <div className="flex w-full">
-      <div className="w-1/4 p-4 border-r">
+      <div className="w-1/5 p-4 border-r">
         <div className="flex flex-col item-start">
           {assessments.map((assessment, index) => (
             <div key={assessment.id} className="flex items-start mb-4 last:mb-0">
@@ -236,7 +183,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
         </div>
       </div>
 
-      <div className="w-3/4 p-4 flex flex-col justify-center items-center">
+      <div className="w-4/5 p-4 flex flex-col justify-center items-center">
         {view === 'main' && (
           <>
             <Button className="w-64 h-16 mb-4 text-lg" onClick={handleGenerateSummary}>
