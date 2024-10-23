@@ -12,6 +12,8 @@ import { generateSum, generateactions } from "../actions/ai"
 import { readStreamableValue } from "ai/rsc"
 import { Assessment } from "@prisma/client"
 import { getAssessments } from "@/actions/db"
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 type View = 'main' | 'summary' | 'nextAction'
 interface AssessmentItem {
@@ -61,6 +63,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
       const { output } = await generateSum(patientId)
       for await (const delta of readStreamableValue(output)) {
         setSummary(curr => `${curr}${delta}`)
+        console.log(summary)
         setIsLoading(false)
       }
     } finally {
@@ -90,60 +93,106 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
 
   const handleBack = () => setView('main')
 
-  const processSummary = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/)
-    return parts.map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={index}>{part.slice(2, -2)}</strong>
-      }
-      return part
-    })
+  interface TableRow {
+    [key: string]: string;
   }
+
+  // Types for component props
+  interface PatientSummaryCardProps {
+    summary: string;
+    isLoading: boolean;
+    handleBack: () => void;
+  }
+
+  // Type for processed table data
+  interface ProcessedTable {
+    headers: string[];
+    dataRows: string[][];
+  }
+
+  const processTableData = (text: string): ProcessedTable => {
+    const rows = text
+      .split('\n')
+      .filter((line: string): boolean => line.trim().length > 0)
+      .map((line: string): string[] =>
+        line
+          .split('|')
+          .map((cell: string): string => cell.trim())
+          .filter((cell: string): boolean => cell.length > 0)
+      );
+
+    return {
+      headers: rows[0] || [],
+      dataRows: rows.slice(2) // Skip the header and separator rows
+    };
+  };
+
+  const processSummary = (text: string): React.ReactNode => {
+    // Split the text into parts that might contain tables or regular text
+    const parts = text.split('|');
+
+    if (parts.length <= 1) {
+      // No tables found, process text normally
+      return text.split('\n').map((line: string, index: number) => {
+        if (line.startsWith('###')) {
+          return (
+            <h3 key={index} className="font-bold text-lg mt-4 mb-2">
+              {line.replace('###', '').trim()}
+            </h3>
+          );
+        }
+        return <div key={index}>{line}</div>;
+      });
+    }
+
+    // If we have a table, process it
+    const { headers, dataRows } = processTableData(text);
+
+    return (
+      <div className="space-y-4">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                {headers.map((header: string, index: number) => (
+                  <th key={index} className="border p-2 bg-gray-100 font-semibold text-left">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {dataRows.map((row: string[], rowIndex: number) => (
+                <tr key={rowIndex}>
+                  {row.map((cell: string, cellIndex: number) => (
+                    <td key={cellIndex} className="border p-2">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
+
 
   return (
     <div className="flex w-full">
       <div className="w-1/4 p-4 border-r">
         <div className="flex flex-col item-start">
           {assessments.map((assessment, index) => (
-            // <div key={assessment.id} className="flex items-start mb-4 last:mb-0">
-            //   <div className="flex flex-col items-center">
-            //     <div
-            //       className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center cursor-pointer"
-            //       onClick={() => handleAssessmentClick(assessment)}
-            //       role="button"
-            //       tabIndex={0}
-            //       onKeyDown={(e) => {
-            //         if (e.key === 'Enter' || e.key === ' ') {
-            //           handleAssessmentClick(assessment)
-            //         }
-            //       }}
-            //     >
-            //       <Check className="text-white" />
-            //     </div>
-            //     {index !== assessments.length - 1 && (
-            //       <div className="w-[2px] h-8 bg-gray-300 my-1" />
-            //     )}
-            //   </div>
-            //   <div className="ml-4">
-            //     <span className="text-sm font-medium text-green-500">
-            //       {assessment.type}
-            //     </span>
-            //     <p className="text-xs text-gray-500">
-            //       {new Date(assessment.createdAt).toLocaleDateString()}
-            //     </p>
-            //     {assessment.daysUntilDue && (
-            //       <p className="text-xs text-gray-400">Every {assessment.daysUntilDue} days</p>
-            //     )}
-            //   </div>
-            // </div>
             <div key={assessment.id} className="flex items-start mb-4 last:mb-0">
               <div className="flex flex-col items-center">
                 <div
                   className={`w-10 h-10 rounded-full ${assessment.status === 'completed'
-                      ? 'bg-green-500'
-                      : assessment.status === 'due'
-                        ? 'bg-yellow-500'
-                        : 'bg-gray-400'
+                    ? 'bg-green-500'
+                    : assessment.status === 'due'
+                      ? 'bg-yellow-500'
+                      : 'bg-gray-400'
                     } flex items-center justify-center cursor-pointer`}
                   onClick={() => handleAssessmentClick(assessment)}
                   role="button"
@@ -168,10 +217,10 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
               </div>
               <div className="ml-4">
                 <span className={`text-sm font-medium ${assessment.status === 'completed'
-                    ? 'text-green-500'
-                    : assessment.status === 'due'
-                      ? 'text-yellow-500'
-                      : 'text-gray-500'
+                  ? 'text-green-500'
+                  : assessment.status === 'due'
+                    ? 'text-yellow-500'
+                    : 'text-gray-500'
                   }`}>
                   {assessment.type}
                 </span>
@@ -210,7 +259,11 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
                   <Loader2 className="h-8 w-8 animate-spin" />
                 </div>
               ) : (
-                <p className="whitespace-pre-line">{processSummary(summary)}</p>
+                <>
+                  <Markdown remarkPlugins={[remarkGfm]}>{summary}</Markdown>
+                  {/* <p>{summary}</p> */}
+                </>
+
               )}
               <Button className="mt-4" onClick={handleBack}>
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
@@ -225,7 +278,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
               <CardTitle>Next Course of Action</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-line">{processSummary(action)}</p>
+              <Markdown remarkPlugins={[remarkGfm]}>{action}</Markdown>
               <Button className="mt-4" onClick={handleBack}>
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>

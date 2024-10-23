@@ -120,145 +120,119 @@ Strictly only mention the above data which is available and do not mention any o
 
 act as a physician and summarize all the health data for hypertensive patients and also do any course corrections to the treatment plan if required.
 
-While answering dont use any symbols like #####
+
+Add table wherever possible
 
 Patient Assessment History:
 ${data}
 
 Some of the example of summary report:
 
-Patient Profile:
-
-Diagnosed with Stage 2 Hypertension (BP consistently above 160/100 mmHg)
-Type 2 Diabetes (HbA1c: 7.5%)
-Dyslipidemia
-Smoker (20 years)
-No known renal issues or other cardiovascular diseases yet, but at high risk due to comorbidities.
-Initial Visit:
-Blood Pressure: 165/105 mmHg
-Current Symptoms: Mild headaches, fatigue
-Labs: Normal kidney function, mild elevation in creatinine, mild proteinuria
-Treatment Plan:
-
-Lifestyle Changes:
-
-DASH diet: Low sodium, increase potassium, lean proteins.
-Weight loss goal.
-Smoking cessation.
-Moderate exercise: 30 minutes daily.
-Medication:
-
-Losartan 50 mg once daily (Angiotensin II Receptor Blocker - ARB).
-Amlodipine 5 mg once daily (Calcium Channel Blocker - CCB).
-Second Visit (Day 3):
-Blood Pressure: 160/100 mmHg
-Symptoms: Mild headaches continue, less frequent.
-Assessment: Initial response is insufficient; BP still elevated.
-
-Adjustment to Treatment:
-
-Increase Losartan to 100 mg once daily.
-Increase Amlodipine to 10 mg once daily.
-Reinforce lifestyle changes, especially sodium intake.
-Third Visit (Day 6):
-Blood Pressure: 155/98 mmHg
-Symptoms: Headaches subsiding, reports some leg swelling (possible side effect of Amlodipine).
-Labs: No significant changes.
-
-Assessment: BP continues to be above target.
-
-Adjustment to Treatment:
-
-Add Hydrochlorothiazide (HCTZ) 12.5 mg once daily (Thiazide diuretic to reduce volume and aid in BP control).
-Continue Losartan 100 mg and Amlodipine 10 mg.
-Monitor for possible electrolyte disturbances due to diuretic.
-Fourth Visit (Day 9):
-Blood Pressure: 148/92 mmHg
-Symptoms: Noticeable improvement in headaches, mild dizziness on standing, increased urination.
-Labs: No significant abnormalities, electrolytes stable.
-
-Assessment: BP still not fully controlled but improving with the addition of diuretic.
-
-Adjustment to Treatment:
-
-Increase HCTZ to 25 mg once daily.
-Continue Losartan 100 mg and Amlodipine 10 mg.
-Encourage continued adherence to diet and exercise.
-Fifth Visit (Day 12):
-Blood Pressure: 142/88 mmHg
-Symptoms: Mild fatigue, overall feeling better, leg swelling has reduced.
-Assessment: BP closer to target, good response to increased diuretic dose.
-
-Adjustment to Treatment:
-
-Add Metoprolol Succinate 25 mg once daily (Beta-blocker to help reduce BP further and control heart rate).
-Monitor for any signs of bradycardia or excessive fatigue.
-Sixth Visit (Day 15):
-Blood Pressure: 138/85 mmHg
-Symptoms: Feeling significantly better, mild fatigue but no headaches or dizziness.
-Assessment: BP within near-optimal range, patient responding well to adjustments.
-
-Adjustment to Treatment:
-
-Maintain current doses of Losartan 100 mg, Amlodipine 10 mg, HCTZ 25 mg, and Metoprolol Succinate 25 mg.
-No new medications needed at this stage.
-Encourage continued compliance with lifestyle changes, focus on exercise and weight loss.
-Seventh Visit (Day 18):
-Blood Pressure: 130/82 mmHg
-Symptoms: No significant complaints, patient reports better energy levels and overall improvement in quality of life.
-Assessment: BP now within target range, significant improvement in symptoms. The patient is responding well to the combined therapy.
-
-Final Treatment Plan:
-
-Losartan 100 mg once daily.
-Amlodipine 10 mg once daily.
-Hydrochlorothiazide 25 mg once daily.
-Metoprolol Succinate 25 mg once daily.
-Continue monitoring BP, electrolytes, and kidney function every few months.
-Summary of Drug Adjustments (3-day intervals):
-Day 0: Started on Losartan 50 mg and Amlodipine 5 mg.
-Day 3: Increased Losartan to 100 mg and Amlodipine to 10 mg.
-Day 6: Added HCTZ 12.5 mg.
-Day 9: Increased HCTZ to 25 mg.
-Day 12: Added Metoprolol 25 mg.
-Day 15: Maintained doses.
-Day 18: BP controlled, maintained current therapy.
-This accelerated timeline shows early intervention and gradual, effective control of hypertension with frequent adjustments, leading to an improvement in BP within two weeks.
-[1:10 am, 23/10/2024] Manav: Course of Treatment and Observations over 18 Days:
-Initial Medications:
-
-Lisinopril 10 mg once daily (ACE Inhibitor for BP control and kidney protection).
-Amlodipine 5 mg once daily (Calcium Channel Blocker to manage hypertension).
-Patient Progress:
-
-Day 6: BP improved slightly to 160/100 mmHg, headaches reduced but still present.
-Day 9: BP further improved to 152/95 mmHg, slight leg swelling due to Amlodipine, renal function stable, mild hyponatremia noted.
-Day 12: BP continued to drop to 145/92 mmHg, headaches almost resolved, leg swelling reduced. Labs showed mild hyponatremia and a slight elevation in potassium, likely related to the use of Lisinopril and diuretics.
-Suggested Adjustment on Day 18:
-Current BP: 130/80 mmHg
-Symptoms: No major complaints, significant improvement in headaches, no further chest tightness, mild fatigue but improved overall well-being.
-Labs: Kidney function stable (eGFR unchanged), sodium levels improving but still mildly low, potassium stable.
-Treatment Adjustment on Day 18:
-Maintain current doses of:
-
-Lisinopril 20 mg once daily (kidney protection and BP control).
-Amlodipine 10 mg once daily (maintain BP control without causing further edema).
-Reduce Chlorthalidone to 12.5 mg once daily if still on a higher dose, as the risk of worsening hyponatremia is present with continued diuretic use, especially given the patient's CKD.
-
-Continue Metoprolol Tartrate 25 mg twice daily (help with BP and occasional chest tightness, monitor for any fatigue or bradycardia).
-
-Monitor electrolyte levels (sodium and potassium), renal function, and BP closely:
-
-Electrolytes: Due to the risk of hyponatremia from Chlorthalidone and hyperkalemia from Lisinopril, continue to check these every 1-2 weeks.
-Kidney function: Given the underlying CKD, ensure no rapid worsening occurs due to medications.
-Encourage further lifestyle changes:
-
-Continue sodium restriction (<1,500 mg/day).
-Encourage weight loss and physical activity within the patient’s tolerance due to osteoarthritis.
-Final Notes:
-On Day 18, the patient's BP is controlled at 130/80 mmHg, and symptoms are well-managed. The focus now shifts to maintaining BP control, minimizing the risk of electrolyte disturbances, and closely monitoring kidney function due to the combined effects of antihypertensive therapy and the patient's CKD.
 
 
+Patient Summary Example:
+
+
+# **Patient Summary Example**
+
+## **Patient Information:**
+- **Patient ID**: 12345
+- **Age**: 58
+- **Sex**: Male
+- **Start of Monitoring**: 2023-08-01
+- **Total Assessments**: 5
+
+---
+
+## **Chronic Conditions:**
+- **Hypertension**
+- **Dyslipidemia**
+- **Type 2 Diabetes Mellitus**
+- **Chronic Kidney Disease (Stage 2)**
+
+---
+
+## **Current Medications:**
+- **Lisinopril (ACE inhibitor)**: 10 mg daily
+- **Atorvastatin**: 20 mg daily
+- **Metformin**: 500 mg twice daily
+- **Amlodipine**: 5 mg daily
+
+---
+
+## **1. Blood Pressure (BP) Trend Analysis**
+
+| **Date**       | **Systolic/Diastolic** | **Trend**  | **Possible Cause** |
+|----------------|------------------------|------------|--------------------|
+| 2023-08-01     | 140/90                 | Upward     | Missed morning medication, high salt intake. |
+| 2023-08-05     | 145/92                 | Upward     | Increased stress, possible fluid retention.  |
+| 2023-08-10     | 142/88                 | Downward   | Resumed regular antihypertensive dose.       |
+| 2023-08-15     | 138/85                 | Downward   | Reduced salt intake, increased physical activity. |
+| 2023-08-20     | 145/90                 | Upward     | High salt intake during social events, skipped medication. |
+
+**Summary**: The patient's BP initially showed an upward trend due to missed medication doses and high sodium intake. After resuming medications and reducing sodium, BP improved temporarily but spiked again after social events involving salt-rich food and skipped medication.
+
+---
+
+## **2. Other Vital Signs (Datewise)**
+
+| **Date**       | **Vital Sign** | **Reading** | **Trend**  | **Possible Cause** |
+|----------------|----------------|-------------|------------|--------------------|
+| 2023-08-01     | Heart Rate      | 80 bpm      | Stable     | Normal heart rate, no abnormalities. |
+| 2023-08-05     | Weight          | 85 kg       | Upward     | Possible fluid retention, lack of exercise. |
+| 2023-08-10     | Weight          | 84.5 kg     | Downward   | Limited fluid intake and low-sodium diet. |
+| 2023-08-15     | Oxygen Saturation | 97%       | Stable     | No respiratory issues, normal reading. |
+| 2023-08-20     | Weight          | 86 kg       | Upward     | Fluid retention due to high salt intake. |
+
+**Summary**: The patient’s weight fluctuated due to fluid retention likely caused by high salt intake. Oxygen saturation and heart rate remained stable, indicating no immediate respiratory or cardiac issues.
+
+---
+
+## **3. Symptom Tracking**
+
+| **Symptom**     | **Date Range**          | **Frequency** | **Most Likely Cause** |
+|-----------------|-------------------------|---------------|-----------------------|
+| Chest Pain      | 2023-08-05 to 2023-08-10 | 3 occurrences | Uncontrolled BP, physical exertion. |
+| Blurry Vision   | 2023-08-08 to 2023-08-10 | 2 occurrences | Elevated BP, potential hypertensive retinopathy. |
+| Palpitations    | 2023-08-15 to 2023-08-20 | 1 occurrence  | Anxiety, occasional missed medication. |
+
+**Summary**: Chest pain occurred during periods of uncontrolled BP and exertion. Blurry vision was noted during periods of high BP, indicating potential hypertensive damage to the eyes. Palpitations were sporadic, likely due to anxiety and missed doses of antihypertensives.
+
+---
+
+## **4. Corrective Steps and Recommendations**
+
+| **Corrective Action**            | **Reason for Recommendation** |
+|----------------------------------|-------------------------------|
+| Increase ACE inhibitor dose      | BP remains elevated despite current medication dosage. |
+| Limit fluid intake to 1.5L/day   | Signs of fluid retention (weight gain). |
+| Restrict sodium intake to <2g/day | High sodium intake linked to elevated BP and weight gain. |
+| Increase physical activity       | Moderate exercise to improve BP control and fluid balance. |
+| Consider diuretic prescription   | If weight and BP remain elevated due to fluid retention. |
+| Refer to ophthalmologist         | Due to recurring blurry vision, potential hypertensive retinopathy risk. |
+
+**Summary**: To better control BP, the patient’s antihypertensive medication dosage should be increased, fluid intake should be limited, and sodium intake should be reduced. If fluid retention continues, consider prescribing a diuretic. The patient should also be referred to an ophthalmologist to rule out any retinopathy due to high BP.
+
+---
+
+## **5. Long-Term Management Plan**
+
+| **Long-Term Action**               | **Explanation** |
+|------------------------------------|-----------------|
+| Weekly BP checks                   | Regular monitoring to ensure BP control. |
+| Monthly renal function tests        | To check for any kidney damage due to hypertension. |
+| Daily exercise recommendation       | 30 minutes of moderate activity to support BP and weight management. |
+| Sodium intake logs                  | Daily sodium intake should be tracked and reduced. |
+| Remote BP monitoring device         | Real-time BP tracking to avoid medication lapses. |
+| Referral to cardiologist            | If chest pain and BP continue to be uncontrolled. |
+
+**Summary**: The patient should follow a long-term management plan that includes regular BP monitoring, tracking sodium intake, and daily exercise. A referral to a cardiologist is recommended if symptoms persist.
+
+---
+
+## **6. Summary Conclusion**
+
+The patient's blood pressure has been fluctuating due to missed medication doses and lifestyle factors, such as high sodium intake. Chest pain and blurry vision are warning signs of uncontrolled BP, placing the patient at risk of cardiovascular events and hypertensive retinopathy. Immediate actions include increasing the antihypertensive medication dose, reducing sodium and fluid intake, and adopting a consistent exercise routine. A cardiologist and ophthalmologist should evaluate the patient due to the recurring symptoms.
 
 
 `;
