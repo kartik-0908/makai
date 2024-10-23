@@ -15,6 +15,9 @@ import { getAssessments } from "@/actions/db"
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+export const maxDuration = 60;
+
+
 type View = 'main' | 'summary' | 'nextAction'
 interface AssessmentItem {
   name: string;
