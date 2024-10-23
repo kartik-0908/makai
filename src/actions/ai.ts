@@ -122,7 +122,8 @@ const patient = await prisma.patient.findUnique({ where: { id } });
 
   const htprompt = `
 
-act as a physician and summarize all the health data for hypertensive patients and also do any course corrections to the treatment plan if required.
+act as a physician and summarize all the health data for hypertensive patients and also do any course corrections to the treatment plan if required. Before suggesting any medicines, check contraindications and interactions and point them out.
+
 
 Patient personal information:
 
