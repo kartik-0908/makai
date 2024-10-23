@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 'use client'
+export const maxDuration = 60;
+
 
 import React, { useState, useEffect } from "react"
 import { Check, FileText, ArrowRight, ArrowLeft, Loader2 } from "lucide-react"
@@ -14,9 +16,6 @@ import { Assessment } from "@prisma/client"
 import { getAssessments } from "@/actions/db"
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-
-export const maxDuration = 60;
-
 
 type View = 'main' | 'summary' | 'nextAction'
 interface AssessmentItem {

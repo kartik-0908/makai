@@ -7,7 +7,6 @@ import { AssessmentWithParsedItems } from '@/components/patient-assessment';
 import { azure } from '@ai-sdk/azure';
 import { PrismaClient } from '@prisma/client'
 
-export const maxDuration = 60;
 
 
 const prisma = new PrismaClient()
