@@ -116,12 +116,17 @@ Strictly only mention the above data which is available and do not mention any o
 
 
     `;
+const patient = await prisma.patient.findUnique({ where: { id } });
+
   const htprompt = `
 
 act as a physician and summarize all the health data for hypertensive patients and also do any course corrections to the treatment plan if required.
 
+Patient personal information:
 
-Add table wherever possible
+patient name: ${patient?.name}
+patient age: ${patient?.age}
+patient gender: ${patient?.gender}
 
 Patient Assessment History:
 ${data}
@@ -236,7 +241,6 @@ The patient's blood pressure has been fluctuating due to missed medication doses
 
 
 `;
-const patient = await prisma.patient.findUnique({ where: { id } });
 
   (async () => {
 
@@ -291,100 +295,3 @@ Strictly only mention the above data which is available and do not mention any o
   })();
   return { output: stream.value };
 }
-
-
-// Patient Assesment  Report:
-// {
-//   "Initial Assessment": [
-//     { name: "CKD Stage", result: "3" },
-//     { name: "Medications", result: "Lisinopril; Furosemide; Atorvastatin" }
-//   ],
-//   "General Assessment": [
-//     { name: "Breathlessness", result: "No" },
-//     { name: "Fatigue", result: "Score: 2" },
-//     { name: "Frequent Urination", result: "Score: 3" },
-//     { name: "Foamy Urine", result: "Yes" },
-//     { name: "Loss of Appetite", result: "No" },
-//     { name: "Muscle Cramps", result: "Score: 2" },
-//     { name: "Swollen Feet (Ankle Girth)", result: "28 cm" },
-//     { name: "Nausea", result: "No" },
-//     { name: "Itching", result: "No" },
-//     { name: "Chest Pain", result: "Score: 0" },
-//     { name: "Musculoskeletal Pain", result: "Score: 2" },
-//     { name: "Bad Breath", result: "No" },
-//     { name: "Palpitations", result: "No" },
-//     { name: "Abdominal Pain", result: "Score: 0" },
-//     { name: "BP", result: "135/85" },
-//     { name: "Oxygen Saturation", result: "95%" },
-//     { name: "Pulses", result: "85" },
-//     { name: "sPo2", result: "Score: 4" },
-//     { name: "GFR", result: "45" },
-//     { name: "Salt Intake", result: "Moderate" },
-//   ],
-//   "Follow-up 1": [
-//     { name: "Breathlessness", result: "No" },
-//     { name: "Fatigue", result: "Score: 2" },
-//     { name: "Frequent Urination", result: "Score: 3" },
-//     { name: "Foamy Urine", result: "Yes" },
-//     { name: "Loss of Appetite", result: "No" },
-//     { name: "Muscle Cramps", result: "Score: 2" },
-//     { name: "Swollen Feet (Ankle Girth)", result: "28 cm" },
-//     { name: "Nausea", result: "No" },
-//     { name: "Itching", result: "No" },
-//     { name: "Chest Pain", result: "Score: 0" },
-//     { name: "Musculoskeletal Pain", result: "Score: 2" },
-//     { name: "Bad Breath", result: "No" },
-//     { name: "Palpitations", result: "No" },
-//     { name: "Abdominal Pain", result: "Score: 0" },
-//     { name: "BP", result: "135/85" },
-//     { name: "Oxygen Saturation", result: "95%" },
-//     { name: "Pulses", result: "85" },
-//     { name: "sPo2", result: "Score: 4" },
-//     { name: "GFR", result: "45" },
-//     { name: "Salt Intake", result: "Moderate" },
-//   ],
-//   "Follow-up 2": [
-//     { name: "Breathlessness", result: "No" },
-//     { name: "Fatigue", result: "Score: 3" },
-//     { name: "Frequent Urination", result: "Score: 3" },
-//     { name: "Foamy Urine", result: "Yes" },
-//     { name: "Loss of Appetite", result: "Yes" },
-//     { name: "Muscle Cramps", result: "Score: 3" },
-//     { name: "Swollen Feet (Ankle Girth)", result: "29 cm" },
-//     { name: "Nausea", result: "No" },
-//     { name: "Itching", result: "No" },
-//     { name: "Chest Pain", result: "Score: 0" },
-//     { name: "Musculoskeletal Pain", result: "Score: 3" },
-//     { name: "Bad Breath", result: "No" },
-//     { name: "Palpitations", result: "Yes" },
-//     { name: "Abdominal Pain", result: "Score: 0" },
-//     { name: "BP", result: "130/82" },
-//     { name: "Oxygen Saturation", result: "93%" },
-//     { name: "Pulses", result: "88" },
-//     { name: "sPo2", result: "Score: 3" },
-//     { name: "GFR", result: "43" },
-//     { name: "Salt Intake", result: "Moderate" },
-//   ],
-//   "Follow-up 3": [
-//     { name: "Breathlessness", result: "Yes" },
-//     { name: "Fatigue", result: "Score: 4" },
-//     { name: "Frequent Urination", result: "Score: 2" },
-//     { name: "Foamy Urine", result: "Yes" },
-//     { name: "Loss of Appetite", result: "Yes" },
-//     { name: "Muscle Cramps", result: "Score: 4" },
-//     { name: "Swollen Feet (Ankle Girth)", result: "30 cm" },
-//     { name: "Nausea", result: "Yes" },
-//     { name: "Itching", result: "Yes" },
-//     { name: "Chest Pain", result: "Score: 0" },
-//     { name: "Musculoskeletal Pain", result: "Score: 4" },
-//     { name: "Bad Breath", result: "Yes" },
-//     { name: "Palpitations", result: "Yes" },
-//     { name: "Abdominal Pain", result: "Score: 0" },
-//     { name: "BP", result: "140/90" },
-//     { name: "Oxygen Saturation", result: "92%" },
-//     { name: "Pulses", result: "90" },
-//     { name: "sPo2", result: "Score: 2" },
-//     { name: "GFR", result: "40" },
-//     { name: "Salt Intake", result: "High" },
-//   ],
-// };
