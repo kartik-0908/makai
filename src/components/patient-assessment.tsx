@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 'use client'
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import { Check, FileText, ArrowRight, ArrowLeft, Loader2, Download } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../components/ui/sheet"
 import { ScrollArea } from "./ui/scroll-area"
@@ -14,7 +14,6 @@ import ReactDOMServer from 'react-dom/server';
 import { getAssessments } from "@/actions/db"
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 
 type View = 'main' | 'summary' | 'nextAction'
@@ -274,7 +273,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
       for await (const delta of readStreamableValue(output)) {
         setSummary(curr => `${curr}${delta}`)
         console.log(summary)
-        setIsLoading(false)
+        // setIsLoading(false)
       }
     } finally {
       setIsLoading(false)
