@@ -246,7 +246,6 @@ The patient's blood pressure has been fluctuating due to missed medication doses
 `;
 
   (async () => {
-
     const { textStream } = await streamText({
       model: openai('o1-preview'),
       prompt: patient?.disease === 'CKD' ? ckdprompt : htprompt,
