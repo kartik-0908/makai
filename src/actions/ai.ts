@@ -6,6 +6,7 @@ import { getAssessments } from './db';
 import { AssessmentWithParsedItems } from '@/components/patient-assessment';
 import { azure } from '@ai-sdk/azure';
 import { PrismaClient } from '@prisma/client'
+import { openai } from '@ai-sdk/openai';
 
 
 
@@ -247,7 +248,7 @@ The patient's blood pressure has been fluctuating due to missed medication doses
   (async () => {
 
     const { textStream } = await streamText({
-      model: azure('gpt-4o'),
+      model: openai('o1-preview'),
       prompt: patient?.disease === 'CKD' ? ckdprompt : htprompt,
     });
 
