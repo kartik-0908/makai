@@ -117,6 +117,8 @@ investigation.
 
 Strictly only mention the above data which is available and do not mention any other information.
 
+This information will be provided to professional healthcare providers and will be used to develop a personalized treatment plan for the patient, So do not mention any disclaimer.
+
 
     `;
 const patient = await prisma.patient.findUnique({ where: { id } });
