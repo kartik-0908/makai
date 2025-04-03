@@ -1,6 +1,6 @@
 /* eslint-disable */
 'use server';
-import { streamText, } from 'ai';
+import { generateText, streamText, } from 'ai';
 import { createStreamableValue } from 'ai/rsc';
 import { getAssessments } from './db';
 import { AssessmentWithParsedItems } from '@/components/patient-assessment';
@@ -121,7 +121,7 @@ This information will be provided to professional healthcare providers and will 
 
 
     `;
-const patient = await prisma.patient.findUnique({ where: { id } });
+  const patient = await prisma.patient.findUnique({ where: { id } });
 
   const htprompt = `
 
@@ -248,12 +248,17 @@ The patient's blood pressure has been fluctuating due to missed medication doses
 `;
 
   (async () => {
-    const { textStream } = await streamText({
-      model: openai('o1-preview'),
+    const { text } = await generateText({
+      model: openai('o1'),
       prompt: patient?.disease === 'CKD' ? ckdprompt : htprompt,
+      providerOptions: {
+        openai: {
+          reasoningEffort: 'high',
+        },
+      },
     });
 
-    for await (const delta of textStream) {
+    for await (const delta of text) {
       stream.update(delta);
     }
 
