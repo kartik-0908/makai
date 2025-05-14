@@ -640,7 +640,7 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
             <Button className="w-64 h-16 mb-4 text-lg" onClick={handleGenerateAction}>
               <ArrowRight className="mr-2 h-6 w-6" /> Next Course of Action
             </Button>
-            <Button className="w-64 h-16 text-lg" onClick={handleGenerateFamilySummary}>
+            <Button className="w-2xl h-16 text-lg" onClick={handleGenerateFamilySummary}>
               <FileText className="mr-2 h-6 w-6" /> Generate Summary for Family
             </Button>
           </>
