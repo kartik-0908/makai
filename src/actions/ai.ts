@@ -4,7 +4,7 @@ import { generateText, streamText, } from 'ai';
 import { createStreamableValue } from 'ai/rsc';
 import { getAssessments } from './db';
 import { AssessmentWithParsedItems } from '@/components/patient-assessment';
-import { azure } from '@ai-sdk/azure';
+import { azure, createAzure } from '@ai-sdk/azure';
 import { PrismaClient } from '@prisma/client'
 import { openai } from '@ai-sdk/openai';
 
@@ -300,5 +300,148 @@ Strictly only mention the above data which is available and do not mention any o
 
     stream.done();
   })();
+  return { output: stream.value };
+}
+
+export async function generateFamilySummary(patientId: string) {
+  const stream = createStreamableValue('');
+  const data = await formatAssessmentData(patientId);
+  console.log("data", data);
+
+  const azureo1 = createAzure({
+    resourceName: 'makai-azurespon',
+    apiKey: process.env.AZURE_OPENAI_API_KEY,
+    apiVersion:'2024-12-01-preview'
+    
+  });
+
+  const prompt = `
+You will receive a series of time-stamped health assessments for a patient, including their vitals, symptoms, lab results, and other clinical information from the past few days.
+Your task is to review this data and generate a clear, easy-to-understand summary of the patient’s condition to share with their family. Avoid medical jargon and focus on explaining the situation in plain language.
+
+Patient Assessment History:
+${data}
+
+Please provide:
+1. A summary of the patient’s recent condition.
+2. Key improvements or concerns.
+
+
+Here’s an example - 
+
+Example: Time‑stamped health data (past 3 days)
+Date & Time
+Vitals
+Symptoms/Notes (patient‑reported unless noted)
+Key Lab Results
+Clinician Actions
+May 11, 2025 – 08:00
+BP 148/92 mmHg  •  HR 96 bpm  •  RR 20/min  •  SpO₂ 94 % RA  •  Temp 98.6 °F
+Mild shortness of breath on exertion; ankles “a little puffy”
+BNP 680 pg/mL (↑)  •  Creatinine 1.3 mg/dL  •  K⁺ 4.5 mEq/L
+Added 20 mg IV furosemide; advised low‑salt diet
+May 11 – 20:00
+BP 142/88  •  HR 92  •  RR 18  •  SpO₂ 95 %
+Urinated frequently after diuretic; breathing easier
+—
+—
+May 12 – 08:00
+BP 138/84  •  HR 88  •  RR 18  •  SpO₂ 95 %
+Swelling down; still fatigued
+Weight +0.5 kg (vs baseline)
+Switched to oral furosemide 40 mg BID
+May 12 – 14:00
+BP 140/86  •  HR 90  •  RR 18  •  SpO₂ 95 %
+Light dizziness when standing; no chest pain
+Na⁺ 136 mEq/L  •  K⁺ 4.3 mEq/L
+Gave electrolyte recheck order
+May 13 – 09:00
+BP 130/80  •  HR 82  •  RR 16  •  SpO₂ 96 %
+Breathing comfortably at rest; ankles almost normal size
+BNP 540 pg/mL (down 20 %), Creatinine 1.2 mg/dL
+Cleared for discharge tomorrow if trend holds
+Med list (current)
+Carvedilol 12.5 mg BID  •  Lisinopril 10 mg daily  •  Furosemide 40 mg BID  •  Metformin 500 mg BID  •  Aspirin 81 mg daily
+
+
+
+
+
+
+
+Patient: 68‑year‑old male with long‑standing congestive heart failure (LVEF 30 %), type 2 diabetes, and hypertension.
+
+
+
+
+
+
+
+
+
+
+Family‑friendly summary
+Over the last three days, Dad’s heart failure “flare‑up” has been settling down nicely:
+Fluid build‑up is retreating.
+
+
+His ankles were swollen, and he felt short of breath on Saturday morning. After a water‑pill (diuretic) in the hospital, he’s peeing more, and the swelling is almost gone.
+
+
+Breathing and energy are improving.
+
+
+Oxygen levels are steady (94‑96 %), and he can now talk and move about the room without gasping.
+
+
+
+
+
+Blood tests look better.
+
+
+A heart‑stress marker (BNP) has dropped about  20 %, showing the heart isn’t under as much strain.
+
+
+Kidney numbers and electrolytes (sodium, potassium) are in the safe zone.
+
+
+Blood pressure and pulse are coming down.
+
+
+From 148/92 to 130/80; pulse from mid‑90s to low‑80s—right where his doctors want it.
+
+
+Medication tweaks.
+
+
+He’s back on regular (oral) water pills instead of IV. Heart‑strengthening and blood‑pressure meds stay the same. No new drugs added.
+
+
+What’s next?
+
+
+If tomorrow morning’s check looks just as good, he’ll head home with instructions: weigh himself daily, stick to a low‑salt diet, keep legs up when sitting, and call if shortness of breath or swelling returns.
+
+
+Bottom line: Dad hit a small speed‑bump with his heart failure, but the worst is past. The fluid overload is easing, his vitals are stable, and labs confirm he’s trending the right way. With meds, diet, and close watch at home, the care team expects a smooth recovery—so you can all breathe a little easier too.
+
+
+Strictly avoid using medical jargon and ensure the summary is family-friendly.
+`;
+
+  (async () => {
+    const { textStream } = await streamText({
+      model: azureo1('o1'),
+      prompt: prompt,
+    });
+
+    for await (const delta of textStream) {
+      stream.update(delta);
+    }
+
+    stream.done();
+  })();
+
   return { output: stream.value };
 }

@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../components/ui/s
 import { ScrollArea } from "./ui/scroll-area"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { generateSum, generateactions } from "../actions/ai"
+import { generateSum, generateactions, generateFamilySummary } from "../actions/ai"
 import { readStreamableValue } from "ai/rsc"
 import { Assessment } from "@prisma/client"
 import ReactDOMServer from 'react-dom/server';
@@ -16,7 +16,7 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import jsPDF from 'jspdf'
 
-type View = 'main' | 'summary' | 'nextAction'
+type View = 'main' | 'summary' | 'nextAction' | 'familySummary'
 interface AssessmentItem {
   name: string;
   result: string;
@@ -485,6 +485,19 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
     }
   }
 
+  const handleGenerateFamilySummary = async () => {
+    setSummary('');
+    setView('familySummary');
+    setIsLoading(true);
+    try {
+      const { output } = await generateFamilySummary(patientId);
+      for await (const delta of readStreamableValue(output)) {
+        setSummary((curr) => `${curr}${delta}`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAssessmentClick = (assessment: AssessmentWithParsedItems) => {
     setSelectedAssessment(assessment)
@@ -624,8 +637,11 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
             <Button className="w-64 h-16 mb-4 text-lg" onClick={handleGenerateSummary}>
               <FileText className="mr-2 h-6 w-6" /> Generate Summary
             </Button>
-            <Button className="w-64 h-16 text-lg" onClick={handleGenerateAction}>
+            <Button className="w-64 h-16 mb-4 text-lg" onClick={handleGenerateAction}>
               <ArrowRight className="mr-2 h-6 w-6" /> Next Course of Action
+            </Button>
+            <Button className="w-64 h-16 text-lg" onClick={handleGenerateFamilySummary}>
+              <FileText className="mr-2 h-6 w-6" /> Generate Summary for Family
             </Button>
           </>
         )}
@@ -691,6 +707,54 @@ export function PatientAssessment({ patientId }: PatientAssessmentProps) {
             </CardContent>
           </Card>
         )}
+
+        {view === 'familySummary' && (
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>
+                <Button
+                  onClick={handleGeneratePDF}
+                  disabled={isLoading || isPdfGenerating || !summary}
+                  variant="outline"
+                >
+                  {isPdfGenerating ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Download className="mr-2 h-4 w-4" />
+                  )}
+                  Download PDF
+                </Button>
+                <Button
+                  onClick={() => downloadMarkdown(summary, 'family-summary.md')}
+                  disabled={isLoading || !summary}
+                  variant="outline"
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  Download MD
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-8 w-8 animate-spin" />
+                </div>
+              ) : (
+                <>
+                  <div className="bg-white p-4 rounded">
+                    <Markdown remarkPlugins={[remarkGfm]}>{summary}</Markdown>
+                  </div>
+                  <div className="flex gap-2 mt-4">
+                    <Button onClick={handleBack}>
+                      <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                    </Button>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
       </div>
 
       <Sheet open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
